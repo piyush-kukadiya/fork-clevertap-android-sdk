@@ -38,6 +38,8 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import org.json.JSONObject
 import kotlin.system.measureTimeMillis
 
+// CICD test comment 1
+// CICD test comment 2
 class MyApplication : MultiDexApplication(), CTPushNotificationListener, ActivityLifecycleCallbacks,
     InboxMessageButtonListener, InboxMessageListener {
 
@@ -54,6 +56,22 @@ class MyApplication : MultiDexApplication(), CTPushNotificationListener, Activit
             )
         }
 
+    /**
+     * Called when the application is starting, before any other application objects have been created.
+     *
+     * This method is responsible for initializing various components of the application. It performs
+     * the following key tasks:
+     * 1.  Starts `ANRWatchDog` to monitor for Application Not Responding errors.
+     * 2.  Configures `StrictMode` for debugging purposes during development.
+     * 3.  Initializes CleverTap SDK components *before* calling `super.onCreate()`. This includes
+     *     registering custom in-app message templates and setting up activity lifecycle callbacks.
+     *     The time taken for this pre-initialization is measured and logged.
+     * 4.  Calls `super.onCreate()` to proceed with the standard application creation process.
+     * 5.  Performs post-initialization tasks for CleverTap, such as creating the main SDK instance,
+     *     setting up listeners for various events (push notifications, inbox messages, etc.),
+     *     and creating notification channels. The time for this post-initialization is also
+     *     measured and logged.
+     */
     override fun onCreate() {
         ANRWatchDog().start()
         setupStrictMode()
@@ -95,6 +113,16 @@ class MyApplication : MultiDexApplication(), CTPushNotificationListener, Activit
         registerActivityLifecycleCallbacks(this)
     }
 
+    /**
+     * Performs post-initialization tasks for the CleverTap SDK.
+     *
+     * This function handles:
+     * - Installing the security provider to prevent SSL issues.
+     * - Creating the main `CleverTapAPI` instance.
+     * - Attaching listeners for sync, inbox, push, and in-app events.
+     * - Syncing the CleverTap ID with Firebase Analytics.
+     * - Creating required notification channels for Android 8.0+.
+     */
     private fun cleverTapPostAppCreated() {
         ProviderInstaller.installIfNeededAsync(this, object : ProviderInstallListener {
             override fun onProviderInstalled() {}
@@ -241,6 +269,7 @@ class MyApplication : MultiDexApplication(), CTPushNotificationListener, Activit
         Log.i(TAG, "onNotificationClickedPayloadReceived = $payload")
     }
 
+    // attaches base context, android method.
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
         MultiDex.install(this)
@@ -286,6 +315,7 @@ class MyApplication : MultiDexApplication(), CTPushNotificationListener, Activit
         //dismissAppInbox()
     }
 
+    // onInboxItemClicked
     override fun onInboxItemClicked(message: CTInboxMessage?, contentPageIndex: Int, buttonIndex: Int) {
         Log.i(
             TAG,
