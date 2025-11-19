@@ -38,6 +38,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import org.json.JSONObject
 import kotlin.system.measureTimeMillis
 
+// CICD test comment 1
 class MyApplication : MultiDexApplication(), CTPushNotificationListener, ActivityLifecycleCallbacks,
     InboxMessageButtonListener, InboxMessageListener {
 
