@@ -303,6 +303,7 @@ class MyApplication : MultiDexApplication(), CTPushNotificationListener, Activit
         //dismissAppInbox()
     }
 
+    // onInboxItemClicked
     override fun onInboxItemClicked(message: CTInboxMessage?, contentPageIndex: Int, buttonIndex: Int) {
         Log.i(
             TAG,
