@@ -40,6 +40,7 @@ import kotlin.system.measureTimeMillis
 
 // CICD test comment 1
 // CICD test comment 2
+// CICD test comment 3
 class MyApplication : MultiDexApplication(), CTPushNotificationListener, ActivityLifecycleCallbacks,
     InboxMessageButtonListener, InboxMessageListener {
 
